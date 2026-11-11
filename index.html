@@ -434,7 +434,7 @@ th{background:var(--panel2)}
  --side:#e9efe9;--side-card:#d6e4da;--side-line:#d3ddd5;--side-sub:#5c6a64;--blue-l:#2e6b57;--side-ink:#1a2420;--hero:#1f3d33;--hero-em:#9fd3b8}
 </style>
 <div class="pvband">
- <span>미리보기 사이트 1 (휴먼터치) · <a href="#preview-changes">무엇이 바뀌었나 보기</a> · 실제 허브는 그대로</span>
+ <span>미리보기 · 휴먼터치 보강 · 실제 허브는 그대로</span>
  <span class="pvs" id="pvs">디자인 시안:
   <button type="button" data-k="">A 지금</button><button type="button" data-k="b">B 네이비·골드</button><button type="button" data-k="c">C 크림·테라코타</button><button type="button" data-k="d">D 화이트·블루</button><button type="button" data-k="e">E 세이지 그린</button>
  </span>
@@ -450,6 +450,33 @@ th{background:var(--panel2)}
   }
   document.getElementById('pvs').addEventListener('click',function(e){var b=e.target.closest('button');if(b)set(b.dataset.k)});
   set(k);
+})();
+</script>
+
+<style id="pv-nav-css">
+aside #nav{display:none!important}
+.pvnav{display:flex;flex-direction:column;gap:3px}
+.pvnav .pvh{font-size:12px;letter-spacing:.04em;opacity:.7;padding:10px 12px 4px}
+.pvnav .pvfull{margin-top:14px;font-size:12.5px;opacity:.75;padding:0 12px}
+.pvnav .pvfull a{color:inherit}
+</style>
+<script>
+(function(){
+  var h=location.hash.replace('#','');
+  if(!h||h==='home')history.replaceState(null,'','#preview-changes');
+  function mount(){
+    var nav=document.getElementById('nav');if(!nav||document.querySelector('.pvnav'))return;
+    var d=document.createElement('div');d.className='pvnav';
+    d.innerHTML='<div class="pvh">이번 미리보기에서 바뀐 곳</div>'+"<a class=\"navl\" href=\"#preview-changes\">\uc774\ubc88\uc5d0 \ubc14\ub010 \uac83<span class=\"nd\">\uc5ec\uae30\ubd80\ud130 \ubcf4\uc138\uc694</span></a><a class=\"navl\" href=\"#d220ba5d7\">\ud654\ubc95\u00b7\ubc18\ub860\ucc98\ub9ac\u00b7\ud734\uba3c\ud130\uce58 \ubaa8\uc74c<span class=\"nd\">\ubc14\ub01c \u00b7 \ud734\uba3c\ud130\uce58 13\uac1c \ud56d\ubaa9</span></a>"+
+      '<div class="pvfull">다른 메뉴는 실제 허브와 같습니다. <a href="https://xdrygv1-lab.github.io/4and7-next-hub/" target="_blank" rel="noopener">실제 허브 열기</a></div>';
+    nav.parentNode.insertBefore(d,nav);mark();
+  }
+  function mark(){
+    var cur=location.hash||'#preview-changes';
+    document.querySelectorAll('.pvnav .navl').forEach(function(a){a.classList.toggle('on',a.getAttribute('href')===cur)});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount);else mount();
+  window.addEventListener('hashchange',function(){var x=location.hash.replace('#','');if(!x||x==='home'){location.replace('#preview-changes');return}mark()});
 })();
 </script>
 </head>
