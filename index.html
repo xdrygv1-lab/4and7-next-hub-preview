@@ -393,7 +393,62 @@ th{background:var(--panel2)}
 
 </style>
 
-<div style="position:sticky;top:0;z-index:9999;background:#b45309;color:#fff;text-align:center;padding:6px 12px;font:600 13px/1.4 system-ui,sans-serif">미리보기 사이트 · 바뀐 곳: 공부하기 › 첫 미팅 화법 › <a href="#d220ba5d7" style="color:#fff;text-decoration:underline">화법·반론처리·휴먼터치 모음</a> · 실제 허브는 그대로입니다</div>
+<style id="pv-skins">
+/* 미리보기 전용 디자인 시안. 시안 B~E 는 밝은 화면으로 고정해 비교한다. */
+.pvband{position:sticky;top:0;z-index:9999;background:#7c2d12;color:#fff;padding:7px 12px;font:600 13px/1.5 system-ui,sans-serif;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;justify-content:center}
+.pvband a{color:#fff;text-decoration:underline}
+.pvband .pvs{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.pvband button{font:600 12.5px system-ui,sans-serif;border:1px solid rgba(255,255,255,.55);background:transparent;color:#fff;border-radius:999px;padding:3px 11px;cursor:pointer}
+.pvband button.on{background:#fff;color:#7c2d12}
+:root[data-skin]{--side-ink:#fff;--hero:#0a0b0d;--hero-ink:#fff}
+:root[data-skin] aside{color:var(--side-ink)}
+:root[data-skin] .brand b,:root[data-skin] .navl,:root[data-skin] .navs .navl:hover,:root[data-skin] .toggle,:root[data-skin] .navfoot a:hover{color:var(--side-ink)}
+:root[data-skin] .navl.on,:root[data-skin] .navl.on .nd{color:#fff}
+:root[data-skin] .toggle:hover{background:var(--side-line)}
+:root[data-skin] .nx-hero,:root[data-skin] .nx-chart,:root[data-skin] .card.main{background:var(--hero);border-color:var(--hero);color:var(--hero-ink)}
+:root[data-skin] .nx-hero h1,:root[data-skin] .card.main .nx-facts .num,:root[data-skin] .nx-bar.best .why{color:var(--hero-ink)}
+:root[data-skin] .card{box-shadow:0 1px 2px rgba(20,20,40,.04),0 8px 24px rgba(20,20,40,.05)}
+
+/* B 네이비·골드: 진한 남색 메뉴 + 아이보리 본문, 고른 메뉴는 금색 */
+:root[data-skin="b"]{--bg:#f6f4ef;--panel:#fff;--ink:#17213a;--sub:#5f6677;--line:#e6e1d6;--mute:#5f6677;
+ --accent:#1f3a68;--accent-bg:#1f3a68;--tint:#eef1f7;--panel2:#f1eee7;--good:#1f3a68;--warn:#b4471f;--bad:#b4471f;
+ --side:#14213d;--side-card:#1f2e52;--side-line:#2a3a60;--side-sub:#c3cadb;--blue-l:#e0b65a;--side-ink:#fff;--hero:#14213d}
+:root[data-skin="b"] .navl.on{background:#e0b65a;color:#14213d}:root[data-skin="b"] .navl.on .nd{color:#14213d}
+
+/* C 크림·테라코타: 따뜻한 종이색, 밝은 메뉴 */
+:root[data-skin="c"]{--bg:#faf6f0;--panel:#fffdf9;--ink:#2a211b;--sub:#76685c;--line:#ece2d5;--mute:#76685c;
+ --accent:#b4532a;--accent-bg:#b4532a;--tint:#f7e9de;--panel2:#f4ece1;--good:#5f7a3a;--warn:#b4532a;--bad:#a8322a;
+ --side:#f3ebe0;--side-card:#eadccb;--side-line:#e2d3c1;--side-sub:#7a6a5c;--blue-l:#b4532a;--side-ink:#2a211b;--hero:#3a2a20}
+
+/* D 화이트·블루: 하얀 메뉴, 산뜻한 파랑 (지금 파랑을 살림) */
+:root[data-skin="d"]{--bg:#f5f7fb;--panel:#fff;--ink:#121826;--sub:#5b6476;--line:#e3e8f0;--mute:#5b6476;
+ --accent:#2f5bea;--accent-bg:#2f5bea;--tint:#eaf0ff;--panel2:#eef2f8;--good:#2f5bea;
+ --side:#fff;--side-card:#eef3ff;--side-line:#e3e8f0;--side-sub:#5b6476;--blue-l:#2f5bea;--side-ink:#121826;--hero:#2f5bea}
+
+/* E 세이지 그린: 차분한 초록, 밝은 메뉴 */
+:root[data-skin="e"]{--bg:#f4f6f2;--panel:#fff;--ink:#1a2420;--sub:#5c6a64;--line:#dfe5df;--mute:#5c6a64;
+ --accent:#2e6b57;--accent-bg:#2e6b57;--tint:#e5f0ea;--panel2:#eef2ee;--good:#2e6b57;
+ --side:#e9efe9;--side-card:#d6e4da;--side-line:#d3ddd5;--side-sub:#5c6a64;--blue-l:#2e6b57;--side-ink:#1a2420;--hero:#1f3d33}
+</style>
+<div class="pvband">
+ <span>미리보기 사이트 · 바뀐 곳: <a href="#d220ba5d7">화법·반론처리·휴먼터치 모음</a> · 실제 허브는 그대로</span>
+ <span class="pvs" id="pvs">디자인 시안:
+  <button type="button" data-k="">A 지금</button><button type="button" data-k="b">B 네이비·골드</button><button type="button" data-k="c">C 크림·테라코타</button><button type="button" data-k="d">D 화이트·블루</button><button type="button" data-k="e">E 세이지 그린</button>
+ </span>
+</div>
+<script>
+(function(){
+  var r=document.documentElement,k='';
+  try{k=localStorage.getItem('pv-skin')||''}catch(e){}
+  function set(v){
+    if(v){r.setAttribute('data-skin',v);r.setAttribute('data-theme','light')}else{r.removeAttribute('data-skin');r.removeAttribute('data-theme')}
+    document.querySelectorAll('#pvs button').forEach(function(b){b.classList.toggle('on',b.dataset.k===v)});
+    try{localStorage.setItem('pv-skin',v)}catch(e){}
+  }
+  document.getElementById('pvs').addEventListener('click',function(e){var b=e.target.closest('button');if(b)set(b.dataset.k)});
+  set(k);
+})();
+</script>
 </head>
 <body>
 <div class="shell" id="shell">
